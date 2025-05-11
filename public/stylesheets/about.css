@@ -1,0 +1,149 @@
+body {
+    background-color: #090D1F;
+}
+
+/* Header styles override */
+.burger span {
+    background: #ffffff;
+}
+
+.username p, .nav-link {
+    color: #fff;
+}
+
+/* Footer styles override */
+.footer-item {
+    color: #fff;
+}
+
+.about-wrapper {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.title {
+    color: #fff;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 180px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    margin-top: 50px;
+}
+
+@media (max-width: 1440px) {
+    .title {
+        font-size: 180px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .title {
+        font-size: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .title {
+        font-size: 60px;
+    }
+}
+
+\.nav-link {
+    color: #FFFFFF;
+}
+
+.about-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    object-fit: cover;
+    width: 100%;
+}
+
+
+.profile-image {
+    margin-top: 40px;
+    object-fit: cover;
+}
+
+.profile-image img {
+    width: 600px;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+}
+
+.about-section {
+    max-width: 800px;
+    margin-top: 40px;
+    color: #FFFFFF;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.about-section h3 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+.about-section ul {
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.about-section ul li {
+    margin-bottom: 10px;
+}
+
+.about-section footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+}
+
+.about-section footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.about-section footer a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+
+
+    .profile-image img {
+        height: auto;
+    }
+
+    .about-section {
+        padding: 0 20px;
+        font-size: 20px;
+    }
+
+    .about-section h3 {
+        font-size: 25px;
+    }
+
+}
