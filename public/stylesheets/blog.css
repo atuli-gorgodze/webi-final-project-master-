@@ -205,7 +205,7 @@ body {
     max-width: 400px;
 }
 
-.form button {
+.btn{
     background-color: #8b5cf6;
     color: white;
     padding: 16px 24px;
@@ -216,7 +216,7 @@ body {
     transition: background 0.3s;
 }
 
-.form button:hover {
+.btn :hover {
     background-color: #7c3aed;
 }
 
