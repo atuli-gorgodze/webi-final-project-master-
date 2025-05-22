@@ -100,43 +100,6 @@ router.post('/:blogId/comments', requireAuth, (req, res) => {
     res.redirect(`/blogs/${blogId}`);
 });
 
-router.post('/:blogId/comments/:commentId/reply', requireAuth, (req, res) => {
-    const { blogId, commentId } = req.params;
-    const { reply } = req.body;
-
-    if (!reply || reply.trim() === '') {
-        return res.status(400).send('Reply cannot be empty');
-    }
-
-    const blogs = JSON.parse(fs.readFileSync(BLOGS_FILE));
-    const blog = blogs.find(b => b.id === blogId);
-
-    if (!blog) {
-        return res.status(404).send('Blog not found');
-    }
-
-    blog.comments = blog.comments || [];
-    const comment = blog.comments.find(c => c.id === commentId);
-
-    if (!comment) {
-        return res.status(404).send('Comment not found');
-    }
-
-    comment.replies = comment.replies || [];
-    const newReply = {
-        id: String(Date.now()),
-        author: req.session.user.email,
-        text: reply,
-        date: new Date().toLocaleString()
-    };
-
-    comment.replies.push(newReply);
-
-    fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2));
-
-    // Page reloads after redirect
-    res.redirect(`/blogs/${blogId}`);
-});
 
 
 module.exports = router;
