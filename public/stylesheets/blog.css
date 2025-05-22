@@ -160,7 +160,6 @@ body {
 }
 
 .section {
-
     padding: 120px 20px 30px;
     text-align: center;
 }
@@ -238,4 +237,76 @@ body {
     .description {
         font-size: 16px;
     }
+}
+
+.comments-section {
+    margin-top: 50px;
+    background-color: #1a1a2e;
+    padding: 30px;
+    border-radius: 12px;
+    color: white;
+}
+
+.comments-header h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    resize: vertical;
+    margin-bottom: 10px;
+    background: rgba(55, 65, 81, 1);
+}
+
+.comment-form .btn {
+    background-color: #6c63ff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.comment {
+    background: #12122a;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-text {
+    margin: 10px 0;
+}
+
+.txt-area{
+    width: 50%;
+    min-height: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    resize: vertical;
+    margin-bottom: 10px;
+    background: rgba(55, 65, 81, 1);
+}
+
+.reply-form{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-reply{
+    height: 50px;
 }

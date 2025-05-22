@@ -46,6 +46,7 @@
         </div>
     </div>
 
+   <div class="blog-content">
     <div class="blog-content">
         <p class="blog-date"><%= blog.formatedDate %></p>
 
@@ -53,7 +54,54 @@
 
         <p class="blog-text"><%= blog.content %></p>
     </div>
+
+       <section class="comments-section">
+           <div class="comments-header">
+               <h2>Comments</h2>
+               <form action="/blogs/<%= blog.id %>/comments" method="POST" class="comment-form">
+                   <textarea name="comment" placeholder="Write a comment..." required></textarea>
+                   <button type="submit" class="btn">Post Comment</button>
+               </form>
+           </div>
+
+           <div class="comments-list">
+               <% if (blog.comments && blog.comments.length > 0) { %>
+                   <% blog.comments.forEach((comment, i) => { %>
+                       <div class="comment">
+                           <p class="comment-author"><%= comment.author %></p>
+                           <p class="comment-text"><%= comment.text %></p>
+                           <p class="comment-date"><%= comment.date %></p>
+
+
+                           <form action="/blogs/<%= blog.id %>/comments/<%= comment.id %>/reply" method="POST" class="reply-form">
+                               <textarea class="txt-area" name="reply" placeholder="Reply..." required></textarea>
+                               <button type="submit" class="btn btn-reply">Reply</button>
+                           </form>
+
+
+                           <% if (comment.replies && comment.replies.length > 0) { %>
+                               <div class="replies">
+                                   <% comment.replies.forEach(reply => { %>
+                                       <div class="reply">
+                                           <p class="reply-author"><%= reply.author %></p>
+                                           <p class="reply-text"><%= reply.text %></p>
+                                           <p class="reply-date"><%= reply.date %></p>
+                                       </div>
+                                   <% }) %>
+                               </div>
+                           <% } %>
+                       </div>
+                   <% }) %>
+               <% } else { %>
+                   <p class="no-comments">No comments yet.</p>
+               <% } %>
+           </div>
+       </section>
+
+   </div>
 </div>
+
+
 
 <section class="section">
     <div class="subtitle">Newlatters</div>

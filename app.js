@@ -13,7 +13,7 @@ const blogsRouter= require('./routes/blogs');
 const logoutRouter= require('./routes/logout');
 const aboutRouter= require('./routes/about');
 const newlattersRouter= require('./routes/newlatters');
-const comentsRouter= require('./routes/coments');
+
 const app = express();
 
 // view engine setup
@@ -41,7 +41,7 @@ app.use('/blogs', blogsRouter)
 app.use('/logout', logoutRouter)
 app.use('/about', aboutRouter)
 app.use('/newlatters', newlattersRouter);
-app.use('/coments', comentsRouter)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -57,6 +57,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 
 module.exports = app;
