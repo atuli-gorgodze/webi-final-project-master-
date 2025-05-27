@@ -18,10 +18,6 @@ body {
 
 .about-wrapper {
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
 }
 
 .title {
@@ -61,89 +57,27 @@ body {
     }
 }
 
-\.nav-link {
-    color: #FFFFFF;
-}
-
-.about-container{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    object-fit: cover;
+.about-me-banner {
+    margin-top: 60px;
     width: 100%;
 }
 
-
-.profile-image {
-    margin-top: 40px;
-    object-fit: cover;
-}
-
-.profile-image img {
-    width: 600px;
-    height: auto;
-    object-fit: cover;
-    width: 100%;
-}
-
-.about-section {
-    max-width: 800px;
-    margin-top: 40px;
-    color: #FFFFFF;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    line-height: 1.8;
-}
-
-.about-section h3 {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    font-size: 24px;
+.section-title {
+    font-family: Inter, monospace;
     font-weight: 600;
-    color: #FFFFFF;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding-bottom: 5px;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 1);
+    margin-top: 32px;
 }
 
-.about-section ul {
-    padding-left: 20px;
-    list-style-type: disc;
-}
-
-.about-section ul li {
-    margin-bottom: 10px;
-}
-
-.about-section footer {
-    margin-top: 40px;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
-    text-align: center;
-}
-
-.about-section footer a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    margin: 0 5px;
-}
-
-.about-section footer a:hover {
-    text-decoration: underline;
-}
-@media (max-width: 768px) {
-
-
-    .profile-image img {
-        height: auto;
-    }
-
-    .about-section {
-        padding: 0 20px;
-        font-size: 20px;
-    }
-
-    .about-section h3 {
-        font-size: 25px;
-    }
-
+.about-me-text {
+    margin-top: 12px;
+    font-family: Inter, monospace;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: rgba(192, 197, 208, 1);
 }

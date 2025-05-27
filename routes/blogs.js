@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
+const Blog = require('../models/blog');
 
-const BLOGS_FILE = 'blogs.json';
 
 const requireAuth = (req, res, next) => {
     if (req.session.user) {
@@ -13,8 +12,9 @@ const requireAuth = (req, res, next) => {
     }
 }
 
-router.get('/', requireAuth, function (req, res, next) {
-    const blogs = JSON.parse(fs.readFileSync(BLOGS_FILE));
+router.get('/', requireAuth, async function (req, res, next) {
+    const blogs = await Blog.find({});
+    blogs.reverse()
 
     const email = req.session.user.email;
 
@@ -26,14 +26,13 @@ router.get('/new', requireAuth, function (req, res, next) {
     res.render('new_blog', {error: null, email});
 });
 
-router.post('/new', requireAuth, function (req, res, next) {
+router.post('/new', requireAuth, async function (req, res, next) {
     const {title, description, content} = req.body;
 
     if (!title || !content) {
         res.render("new_blog", {error: "Missing title or content"});
     }
 
-    const blogs = JSON.parse(fs.readFileSync(BLOGS_FILE));
     const currentDate = new Date();
     const currentDay = currentDate.getDate();
     const currentMonth = currentDate.getMonth();
@@ -54,7 +53,7 @@ router.post('/new', requireAuth, function (req, res, next) {
     ];
     const currentMonthString = months[currentMonth];
     const formatedDate = `${currentDay} ${currentMonthString} ${currentYear}`;
-    const newBlog = {
+    const newBlogData = {
         id: String(Date.now()),
         title,
         description,
@@ -64,42 +63,118 @@ router.post('/new', requireAuth, function (req, res, next) {
         formatedDate
     }
 
-    blogs.unshift(newBlog);
-    fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2));
-    res.redirect('/blogs');
+    try {
+        const newBlog = new Blog(newBlogData);
+        await newBlog.save();
+        res.redirect('/blogs');
+    } catch (err) {
+        console.log(err);
+    }
 });
 
-router.get('/:blogId', requireAuth, function (req, res, next) {
+router.get('/:blogId', requireAuth, async function (req, res, next) {
     const email = req.session.user.email;
-    const { blogId } = req.params
+    const {blogId} = req.params
 
-    const data = fs.readFileSync(BLOGS_FILE)
-    const blogs = JSON.parse(data);
-
-    const blog = blogs.find(blog => blog.id === blogId);
-    console.log(blog);
-
-    res.render('blog', { email, blogs, blog });
+    try {
+        const blogs = await Blog.find();
+        blogs.reverse()
+        const blog = await Blog.findOne({id: blogId});
+        res.render('blog', {email, blogs, blog});
+    } catch (err) {
+        console.log(err);
+    }
 });
 
-router.post('/:blogId/comments', requireAuth, (req, res) => {
-    const { blogId } = req.params;
-    const { comment } = req.body;
-    const blogs = JSON.parse(fs.readFileSync(BLOGS_FILE));
-    const blog = blogs.find(b => b.id === blogId);
+router.post('/:blogId/newComment', requireAuth, async function (req, res, next) {
+    const {blogId} = req.params;
+    const {newComment} = req.body;
 
-    if (!blog.comments) blog.comments = [];
+    try {
+        const blog = await Blog.findOne({id: blogId});
+        if (!blog) {
+            throw new Error('Blog not found');
+        }
 
-    blog.comments.unshift({
-        author: req.session.user.email,
-        text: comment,
-        date: new Date().toLocaleString()
-    });
+        const comment = {
+            id: String(Date.now()),
+            content: newComment,
+            author: req.session.user.email,
+            replies: []
+        };
 
-    fs.writeFileSync(BLOGS_FILE, JSON.stringify(blogs, null, 2));
+        // Using $push operator to add the new comment to the comments array
+        await Blog.updateOne(
+            {id: blogId},
+            {$push: {comments: comment}}
+        );
+
+    } catch (err) {
+        console.log(err);
+    }
+
     res.redirect(`/blogs/${blogId}`);
 });
 
+router.post('/:blogId/comment/:commentId/like', requireAuth, async function (req, res, next) {
+    const {blogId, commentId} = req.params;
+    const email = req.session.user.email;
 
+    try {
+        // First, find the blog and check if the user has already liked the comment
+        const blog = await Blog.findOne(
+            {id: blogId, 'comments.id': commentId}
+        );
+
+        const comment = blog.comments.find(c => c.id === commentId);
+        const hasLiked = comment.likes && comment.likes.includes(email);
+
+        // If user has already liked, remove the like; otherwise add it
+        const updateOperation = hasLiked
+            ? { $pull: { 'comments.$.likes': email } }
+            : { $addToSet: { 'comments.$.likes': email } };
+
+        const result = await Blog.updateOne(
+            {id: blogId, 'comments.id': commentId},
+            updateOperation
+        );
+        console.log(result);
+    } catch (err) {
+        console.log(err);
+    }
+
+    res.redirect(`/blogs/${blogId}`);
+});
+
+router.post('/:blogId/comment/:commentId/reply', requireAuth, async function (req, res, next) {
+    const {blogId, commentId} = req.params;
+    const {replyContent} = req.body;
+
+    try {
+        const reply = {
+            content: replyContent,
+            author: req.session.user.email
+        };
+
+        // Using $push to add the reply to the specific comment's replies array
+        const res = await Blog.updateOne(
+            {
+                'id': blogId,
+                'comments.id': commentId
+            },
+            {
+                $push: {
+                    'comments.$.replies': reply
+                }
+            }
+        );
+
+        console.log(res);
+    } catch (err) {
+        console.log(err);
+    }
+
+    res.redirect(`/blogs/${blogId}`);
+});
 
 module.exports = router;

@@ -1,13 +1,12 @@
 footer {
     margin: 0 auto;
     padding: 60px 0 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .footer-list {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 14px;
 }
 
