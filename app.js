@@ -13,6 +13,7 @@ const blogsRouter = require('./routes/blogs');
 const logoutRouter = require('./routes/logout');
 const aboutRouter = require('./routes/about');
 const newsletterRouter= require('./routes/newsletter');
+const noBlogsRouter = require('./routes/noBlogs');
 
 const {connectDatabase} = require("./database/database");
 
@@ -45,6 +46,7 @@ app.use('/blogs', blogsRouter)
 app.use('/logout', logoutRouter)
 app.use('/about', aboutRouter)
 app.use('/newsletter', newsletterRouter);
+app.use('/noBlogs', noBlogsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

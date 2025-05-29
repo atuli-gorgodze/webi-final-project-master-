@@ -18,9 +18,10 @@ body{
 }
 
 .newsletter-container h2 {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 16px;
+    font-size: 48px;
+    font-weight: 600;
+    margin: 10px 0;
+    color: rgba(255, 255, 255, 1);
 }
 
 .newsletter-description p {
